@@ -23,7 +23,7 @@ parquet_sftp_path = f"{sftp_dir}/{parquet_file_name}.parquet"
 avro_file_name = "orders"
 avro_file_path = f"fixtures/avro/data/{avro_file_name}.avsc"
 avro_sftp_path = f"{sftp_dir}/{avro_file_name}.avsc"
-
+avro_file_path_backup = f"fixtures/avro/{avro_file_name}.avro"
 dbml_file_name = "dbml"
 dbml_file_path = f"fixtures/dbml/import/{dbml_file_name}.txt"
 dbml_sftp_path = f"{sftp_dir}/{dbml_file_name}.txt"
@@ -79,6 +79,10 @@ def sftp_container():
         sftp = ssh.open_sftp()
         try:
             sftp.mkdir(sftp_dir)
+            print(f"current directory : {os.listdir('.')}")
+            print(f"directory fixtures : {os.listdir('fixtures/')}")
+            print(f"directory Avro: {os.listdir('fixtures/avro/')}")
+            print(f"files in Avro data: {os.listdir('fixtures/avro/data/')}")
             sftp.put(avro_file_path, avro_sftp_path)
             sftp.put(dbml_file_path, dbml_sftp_path)
             sftp.put(dbt_file_path, dbt_sftp_path)
